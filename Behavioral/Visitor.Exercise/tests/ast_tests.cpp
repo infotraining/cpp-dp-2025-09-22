@@ -7,39 +7,39 @@ using namespace AST::helpers;
 
 TEST_CASE("expression evaluator visitor", "[ast]")
 {
-    ExprEvalVisitor visitor;
+    ExpressionEvaluator evaluator;
 
     SECTION("integer")
     {
         auto expr = integer(4);
-        expr->accept(visitor);
+        expr->accept(evaluator);
 
-        REQUIRE(visitor.result() == 4);
+        REQUIRE(evaluator.result() == 4);
     }
 
     SECTION("addition")
     {
         auto expr = add(integer(1), integer(2));
-        expr->accept(visitor);
+        expr->accept(evaluator);
 
-        REQUIRE(visitor.result() == 3);
+        REQUIRE(evaluator.result() == 3);
     }
 
     SECTION("multiplication")
     {
         auto expr = multiply(integer(2), integer(3));
-        expr->accept(visitor);
+        expr->accept(evaluator);
 
-        REQUIRE(visitor.result() == 6);
+        REQUIRE(evaluator.result() == 6);
     }
 
     SECTION("composite expression")
     {
         auto expr = add(integer(3), multiply(integer(2), integer(5)));
 
-        expr->accept(visitor);
+        expr->accept(evaluator);
 
-        REQUIRE(visitor.result() == 13);
+        REQUIRE(evaluator.result() == 13);
     }
 }
 

@@ -27,11 +27,12 @@ int main()
 
     cout << "HR Report:\n---------------\n";
 
-    // creating a HR report - TODO: refactor this code
+    // TODO: refactor this code
+    // Hint: remove dynamic casts in gen_info() - use the Factory Method pattern to connect Employee hierarchy with HRInfo hierarchy
     for (const auto& emp : emps)
     {
         HRInfo* hri = gen_info(*emp);
         hri->info();
         cout << endl;
-    } // memory leak
+    } // Beware! Memory leak!
 }

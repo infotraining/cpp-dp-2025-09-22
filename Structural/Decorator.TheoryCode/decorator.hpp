@@ -26,15 +26,15 @@ public:
 // "Decorator"
 class Decorator : public Component
 {
+protected:
     std::shared_ptr<Component> component_;
 
-protected:
+public:
     Decorator(std::shared_ptr<Component> component)
         : component_(component)
     {
     }
 
-public:
     void set_component(std::shared_ptr<Component> component)
     {
         component_ = component;
@@ -42,7 +42,7 @@ public:
 
     void operation() override
     {
-        component_->operation(); // delegetion to decorated component
+        component_->operation();
     }
 };
 

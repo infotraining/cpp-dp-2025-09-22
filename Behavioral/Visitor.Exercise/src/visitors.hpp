@@ -3,14 +3,14 @@
 
 #include "ast.hpp"
 
-class ExprEvalVisitor : public AST::AstVisitor
+class ExpressionEvaluator : public AST::AstVisitor
 {
     int result_{};
 
 public:
     void visit(AST::AddNode& node)
     {
-        ExprEvalVisitor lv, rv;
+        ExpressionEvaluator lv, rv;
         node.left().accept(lv);
         node.right().accept(rv);
         result_ = lv.result() + rv.result();
@@ -18,7 +18,7 @@ public:
 
     void visit(AST::MultiplyNode& node)
     {
-        ExprEvalVisitor lv, rv;
+        ExpressionEvaluator lv, rv;
         node.left().accept(lv);
         node.right().accept(rv);
         result_ = lv.result() * rv.result();
@@ -35,7 +35,7 @@ public:
     }
 };
 
-// TODO
+// TODO: Implement visitor that prints expression to string
 class PrintingVisitor
 {
 };

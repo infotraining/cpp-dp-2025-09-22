@@ -5,34 +5,14 @@
 
 namespace Drawing
 {
-    class Circle : public ShapeBase
+    // TODO - Add a circle class to Shape hierarchy
+    // Hint#1 - Register factory for Circle in SingletonShapeFactory
+
+    class Circle
     {
-        int radius_;
-
     public:
-        static constexpr auto id = "Circle";
-
-        Circle(int x = 0, int y = 0, int r = 0)
-            : ShapeBase{x, y}
-            , radius_{r}
-        {
-        }
-
-        void draw() const override
-        {
-            std::cout << "Drawing circle at " << coord() << " with radius: " << radius_ << std::endl;
-        }
-
-        int radius() const
-        {
-            return radius_;
-        }
-
-        void set_radius(int r)
-        {
-            radius_ = r;
-        }
+        Circle();
     };
-} // namespace Drawing
+}
 
 #endif // CIRCLE_H

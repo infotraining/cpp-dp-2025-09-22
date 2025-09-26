@@ -28,6 +28,8 @@ namespace Bank
         }
     };
 
+    // TODO: Refactor this code using State Pattern
+
     enum AccountState
     {
         overdraft,

@@ -13,18 +13,21 @@ class Product;
 class CarBuilder
 {
 public:
+    virtual ~CarBuilder() = default;
+    
     virtual void reset() = 0;
     virtual void build_engine() = 0;
     virtual void build_gearbox() = 0;
     virtual void build_aircondition() = 0;
     virtual void build_wheels() = 0;
-    virtual ~CarBuilder() = default;
 };
 
 // "Director"
 class Director
 {
 public:
+    virtual ~Director() = default;
+    
     virtual void construct(CarBuilder& builder)
     {
         builder.reset();
@@ -33,8 +36,6 @@ public:
         builder.build_aircondition();
         builder.build_wheels();
     }
-    
-    virtual ~Director() = default;
 };
 
 // "Product"

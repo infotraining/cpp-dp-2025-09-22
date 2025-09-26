@@ -1,6 +1,7 @@
 #ifndef PARAGRAPH_HPP_
 #define PARAGRAPH_HPP_
 
+#include <cassert>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -33,6 +34,8 @@ namespace LegacyCode
         Paragraph(const char* txt)
             : buffer_(new char[1024])
         {
+            assert(txt != nullptr && "Null pointer is not allowed");
+            assert(std::strlen(txt) < 1024 && "Input text is too long");
             std::strcpy(buffer_, txt);
         }
 
@@ -45,6 +48,8 @@ namespace LegacyCode
 
         void set_paragraph(const char* txt)
         {
+            assert(txt != nullptr && "Null pointer is not allowed");
+            assert(std::strlen(txt) < 1024 && "Input text is too long");
             std::strcpy(buffer_, txt);
         }
 
@@ -58,11 +63,11 @@ namespace LegacyCode
             std::cout << "Rendering text '" << buffer_ << "' at: [" << posx << ", " << posy << "]" << std::endl;
         }
 
-        virtual ~Paragraph()
+        ~Paragraph()
         {
             delete[] buffer_;
         }
     };
-}
+} // namespace LegacyCode
 
 #endif /*PARAGRAPH_HPP_*/

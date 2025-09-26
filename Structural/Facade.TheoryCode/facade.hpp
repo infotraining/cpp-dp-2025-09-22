@@ -5,71 +5,105 @@
 #include <memory>
 #include <string>
 
-// "Subsystem ClassA"
-class SubSystemOne
+namespace EmailLib
 {
-public:
-    void method_one()
-    {
-        std::cout << "SubSystemOne method" << std::endl;
-    }
-};
+    using IpAddress = std::string;
+    using Port = int;
+    using User = std::string;
+    using Password = std::string;
 
-// "Subsystem ClassB"
-class SubSystemTwo
+    struct MessageBody
+    {
+        std::string body;
+    };
+
+    struct MessageTitle
+    {
+        std::string title;
+    };
+
+    using EmailAddress = std::string;
+
+    class SmtpServer
+    {
+    public:
+        bool connect(const IpAddress& address, Port port)
+        {
+            std::cout << "Connecting to " << address << ":" << port << "...\n";
+            return true;
+        }
+
+        bool authenticate(const User& user, const Password& password)
+        {
+            std::cout << "Authenticating user: " << user << "\n";
+
+            return true;
+        }
+
+        void send_email(const EmailAddress& from, const EmailAddress& to, const MessageTitle& title, const MessageBody& body)
+        {
+            std::cout << "Sending email...\n";
+            std::cout << "From: " << from << "\n";
+            std::cout << "To: " << to << "\n";
+            std::cout << "Title: " << title.title << "\n";
+            std::cout << "Body: " << body.body << "\n";
+        }
+    };
+} // namespace EmailLib
+
+namespace Facade
 {
-public:
-    void method_two()
+    struct Email
     {
-        std::cout << "SubSystemTwo method" << std::endl;
-    }
-};
+        std::string title;
+        std::string body;
+    };
 
-// Subsystem ClassC"
-class SubSystemThree
-{
-public:
-    void method_three()
+    class MailerService
     {
-        std::cout << "SubSystemThree method" << std::endl;
-    }
-};
+        struct MailBuilder
+        {
+            std::string title_;
+            std::string body_;
 
-// Subsystem ClassD"
-class SubSystemFour
-{
-public:
-    void method_four()
-    {
-        std::cout << "SubSystemFour method" << std::endl;
-    }
-};
+            MailBuilder& add_title(std::string title)
+            {
+                title_ = std::move(title);
+                return *this;
+            }
 
-// "Facade"
-class Facade
-{
-    SubSystemOne one;
-    SubSystemTwo two;
-    SubSystemThree three;
-    SubSystemFour four;
+            MailBuilder& add_body(std::string body)
+            {
+                body_ = std::move(body);
+                return *this;
+            }
 
-public:
-    Facade() = default;
+            operator Email()
+            {
+                return Email{title_, body_};
+            }
+        };
 
-    void methodA()
-    {
-        std::cout << "MethodA() ---- \n";
-        one.method_one();
-        two.method_two();
-        four.method_four();
-    }
+    public:
+        MailBuilder create_email()
+        {
+            return MailBuilder();
+        }
 
-    void methodB()
-    {
-        std::cout << "MethodB() ---- \n";
-        two.method_two();
-        three.method_three();
-    }
-};
+        void send_email(std::string from, std::string to, const Email& email)
+        {
+            using namespace EmailLib;
+
+            SmtpServer smtp_server;
+            smtp_server.connect("124.44.33.44", 655);
+
+            MessageBody body{email.body};
+            MessageTitle title{email.title};
+
+            smtp_server.authenticate("Jan.Kowalski", "password");
+            smtp_server.send_email(from, to, title, body);
+        }
+    };
+} // namespace Facade
 
 #endif /*FACADE_HPP_*/

@@ -8,26 +8,10 @@ class Engine
 public:
     virtual void start() = 0;
     virtual void stop() = 0;
-    virtual std::unique_ptr<Engine> clone() const = 0;
     virtual ~Engine() = default;
 };
 
-////////////////////////////////////////////////
-// CRTP - Curiously Recurring Template Parameter
-
-template <typename TEngine, typename TEngineBase = Engine>
-class CloneableEngine : public TEngineBase
-{
-public:
-    using TEngineBase::TEngineBase; // inheritance of constructor
-
-    std::unique_ptr<Engine> clone() const override
-    {
-        return std::make_unique<TEngine>(static_cast<const TEngine&>(*this));
-    }
-};
-
-class Diesel : public CloneableEngine<Diesel>
+class Diesel : public Engine
 {
 public:
     void start() override
@@ -39,14 +23,9 @@ public:
     {
         std::cout << "Diesel stops\n";
     }
-
-    // std::unique_ptr<Engine> clone() const override
-    // {
-    //     return std::make_unique<Diesel>(*this);
-    // }
 };
 
-class TDI : public CloneableEngine<TDI, Diesel>
+class TDI : public Diesel
 {
 public:
     void start() override
@@ -58,30 +37,20 @@ public:
     {
         std::cout << "TDI stops\n";
     }
-
-    // std::unique_ptr<Engine> clone() const override
-    // {
-    //     return std::make_unique<TDI>(*this);
-    // }
 };
 
-class Hybrid : public CloneableEngine<Hybrid>
+class Hybrid : public Engine
 {
 public:
-    void start() override
+    virtual void start() override
     {
         std::cout << "Hybrid starts\n";
     }
 
-    void stop() override
+    virtual void stop() override
     {
         std::cout << "Hybrid stops\n";
     }
-
-    // std::unique_ptr<Engine> clone() const override
-    // {
-    //     return std::make_unique<Hybrid>(*this);
-    // }
 };
 
 class Car
@@ -89,13 +58,8 @@ class Car
     std::unique_ptr<Engine> engine_;
 
 public:
-    Car(std::unique_ptr<Engine> engine)
+    explicit Car(std::unique_ptr<Engine> engine)
         : engine_{std::move(engine)}
-    {
-    }
-
-    Car(const Car& other)
-        : engine_{other.engine_->clone()}
     {
     }
 
@@ -109,11 +73,8 @@ public:
 
 int main()
 {
-    Car c1{std::make_unique<TDI>()};
+    Car c1{std::make_unique<Hybrid>()};
     c1.drive(100);
 
     std::cout << "\n";
-
-    Car c2 = c1;
-    c2.drive(200);
 }

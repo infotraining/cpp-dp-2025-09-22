@@ -31,13 +31,15 @@ public:
     virtual ~TurnstileAPI() = default;
 };
 
-enum class TurnstileState {
+enum class TurnstileState
+{
     locked,
     unlocked
 };
 
 namespace Before
 {
+
     class Turnstile
     {
         TurnstileState state_;
@@ -45,8 +47,8 @@ namespace Before
 
     public:
         Turnstile(TurnstileAPI& api)
-            : state_{TurnstileState::locked}
-            , api_{api}
+            : state_{TurnstileState::locked},
+              api_{api}
         {
         }
 
@@ -81,7 +83,7 @@ namespace Before
             }
         }
     };
-} // namespace Before
+}
 
 namespace After
 {
@@ -151,8 +153,8 @@ namespace After
 
     public:
         Turnstile(TurnstileAPI& api)
-            : state_{ITurnstileState::locked_state}
-            , api_{api}
+            : state_{ITurnstileState::locked_state},
+              api_{api}
         {
         }
 
@@ -171,7 +173,7 @@ namespace After
             state_ = state_->pass(api_);
         }
     };
-} // namespace After
+}
 
 namespace cpp17
 {
@@ -182,16 +184,14 @@ namespace cpp17
     };
 
     template <typename... Ts>
-    overloaded(Ts...) -> overloaded<Ts...>;
+    overloaded(Ts...) -> overloaded<Ts...>; 
 
     class Turnstile
     {
         TurnstileAPI& api_;
 
-        struct Locked
-        { };
-        struct Unlocked
-        { };
+        struct Locked {};
+        struct Unlocked {};
 
         using TurnstileState = std::variant<Locked, Unlocked>;
         TurnstileState state_ = Locked{};
@@ -233,7 +233,7 @@ namespace cpp17
     public:
         explicit Turnstile(TurnstileAPI& api)
             : api_{api}
-        { }
+        {}
 
         void coin()
         {
@@ -242,17 +242,17 @@ namespace cpp17
 
         void pass()
         {
-            state_ = std::visit(PassEvent{api_}, state_);
+             state_ = std::visit(PassEvent{api_}, state_);
         }
 
         ::TurnstileState state() const
         {
-            if (std::holds_alternative<Locked>(state_))
+            if(std::holds_alternative<Locked>(state_))
                 return ::TurnstileState::locked;
-
+            
             return ::TurnstileState::unlocked;
         }
     };
-} // namespace cpp17
+}
 
-#endif // CLASS_TEMPLATES_VECTOR_HPP
+#endif //CLASS_TEMPLATES_VECTOR_HPP

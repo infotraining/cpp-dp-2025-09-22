@@ -41,27 +41,7 @@ namespace API_2
     }
 }
 
-namespace API_3
-{
-    // Future API implementation
-    void chlasnij_linie(int x1, int y1, int x2, int y2)
-    {
-        std::cout << "API_3: Drawing line from (" << x1 << ", " << y1 << ") to (" << x2 << ", " << y2 << ")\n";
-    }
-
-    void chlasnij_elipse(int x, int y, int rx, int ry)
-    {
-        std::cout << "API_3: Drawing ellipse at (" << x << ", " << y << ") with radii (" << rx << ", " << ry << ")\n";
-    }
-
-    void chlasnij_wielokat(const std::vector<std::pair<int, int>>& points)
-    {
-        std::cout << "API_3: Drawing polygon with points: ";
-        for (const auto& point : points)
-            std::cout << "(" << point.first << ", " << point.second << ") ";
-        std::cout << "\n";
-    }
-}
+/////////////////////////////////////////////////////////////
 
 class Drawing
 {
@@ -118,25 +98,6 @@ public:
     }
 };
 
-class DrawingAPI_PL : public Drawing
-{
-public:
-    void draw_line(int x1, int y1, int x2, int y2) override
-    {
-        API_3::chlasnij_linie(x1, y1, x2,   y2);
-    }
-
-    void draw_ellipse(int x, int y, int rx, int ry) override
-    {
-        API_3::chlasnij_elipse(x, y, rx, ry);
-    }
-
-    void draw_polygon(const std::vector<std::pair<int, int>>& points) override
-    {
-        API_3::chlasnij_wielokat(points);
-    }
-};
-
 class Shape
 {
 public:
@@ -148,7 +109,7 @@ class ShapeBase : public Shape
 {
     std::shared_ptr<Drawing> drawing_;
 protected:
-    std::shared_ptr<Drawing> get_drawing() const { return drawing_; }
+    std::shared_ptr<Drawing> drawing() const { return drawing_; }
 public:
     ShapeBase(std::shared_ptr<Drawing> drawing) : drawing_(std::move(drawing)) {}
 };
@@ -162,7 +123,7 @@ public:
 
     void draw() const override
     {
-        get_drawing()->draw_line(x1_, y1_, x2_, y2_);
+        drawing()->draw_line(x1_, y1_, x2_, y2_);
     }
 };
 
@@ -175,10 +136,10 @@ public:
     
         void draw() const override
     {
-        get_drawing()->draw_line(x_, y_, x_ + width_, y_);
-        get_drawing()->draw_line(x_ + width_, y_, x_ + width_, y_ + height_);
-        get_drawing()->draw_line(x_ + width_, y_ + height_, x_, y_ + height_);
-        get_drawing()->draw_line(x_, y_ + height_, x_, y_);
+        drawing()->draw_line(x_, y_, x_ + width_, y_);
+        drawing()->draw_line(x_ + width_, y_, x_ + width_, y_ + height_);
+        drawing()->draw_line(x_ + width_, y_ + height_, x_, y_ + height_);
+        drawing()->draw_line(x_, y_ + height_, x_, y_);
     }
 };
 

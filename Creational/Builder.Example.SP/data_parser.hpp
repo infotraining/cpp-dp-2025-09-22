@@ -42,8 +42,6 @@ public:
             std::getline(fin, row);
 
             DataRow data = split(row, ' ');
-            
-            //boost::split(data, row, boost::is_any_of(delimiters), boost::algorithm::token_compress_on);
 
             report_builder_.add_row(data);
         }

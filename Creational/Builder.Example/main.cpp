@@ -40,20 +40,4 @@ int main()
 
     for (const auto& line : csv_doc)
         cout << line << endl;
-
-    cout << "///////////////////////////////////////////////////////////\n";
-
-    std::cout << "\n\nAd hoc HTML:\n";
-
-    HtmlReportBuilder html_bld;
-
-    html_bld.add_header("TITLE")
-        .begin_data()
-            .add_row({"one", "two", "three"})
-            .add_row({"four", "five", "six"})
-            .add_row({"seven", "eight", "nine"})
-        .end_data()
-        .add_footer("THE END");
-
-    std::cout << html_bld.get_report() << "\n";
 }

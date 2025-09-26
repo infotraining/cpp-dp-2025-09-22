@@ -11,10 +11,10 @@ int main()
 
     auto expr = add(integer(3), multiply(integer(2), integer(5)));
 
-    ExprEvalVisitor evaluator;
+    ExpressionEvaluator evaluator;
     expr->accept(evaluator);
 
-    // TODO - uncomment code
+    // TODO - uncomment code below
     
     // PrintingVisitor printer;
     // expr->accept(printer);

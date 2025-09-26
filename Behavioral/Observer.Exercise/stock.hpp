@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+// TODO: Define Observer interface
 class Observer
 {
 public:
@@ -13,13 +14,13 @@ public:
     }
 };
 
-// Subject
+// TODO: Implement the class that sends notification on price change
 class Stock
 {
 private:
     std::string symbol_;
     double price_;
-    // TODO - kontener przechowywujacy obserwatorow
+    // TODO: add container that holds observers
 public:
     Stock(const std::string& symbol, double price) : symbol_(symbol), price_(price)
     {
@@ -35,15 +36,15 @@ public:
         return price_;
     }
 
-    // TODO: rejestracja obserwatora
+    // TODO: subscribe observer
 
-    // TODO: wyrejestrowanie obserwatora
+    // TODO: unsubscribe observer
 
     void set_price(double price)
     {
         price_ = price;
 
-        // TODO: powiadomienie inwestorow o zmianie kursu...
+        // TODO: notify observers on changing the stock price
     }
 };
 
@@ -58,7 +59,7 @@ public:
 
     void update(/*...*/)
     {
-        // TODO: implementacja
+        // TODO: implement callback
     }
 };
 

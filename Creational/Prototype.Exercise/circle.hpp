@@ -5,13 +5,11 @@
 
 namespace Drawing
 {
-    class Circle : public CloneableShape<Circle, ShapeBase>
+    class Circle : public ShapeBase
     {
         int radius_;
 
     public:
-        using BaseType = CloneableShape<Circle, ShapeBase>;
-        
         static constexpr const char* id = "Circle";
 
         Circle(int x = 0, int y = 0, int r = 0);
@@ -28,6 +26,6 @@ namespace Drawing
 
         void draw() const override;
     };
-} // namespace Drawing
+}
 
 #endif // CIRCLE_H

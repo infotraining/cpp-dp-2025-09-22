@@ -5,13 +5,11 @@
 
 namespace Drawing
 {
-    class Rectangle : public CloneableShape<Rectangle, ShapeBase>
+    class Rectangle : public ShapeBase
     {
         int width_, height_;
 
     public:
-        using BaseType = CloneableShape<Rectangle, ShapeBase>;
-        
         static constexpr const char* id = "Rectangle";
 
         Rectangle(int x = 0, int y = 0, int w = 0, int h = 0);

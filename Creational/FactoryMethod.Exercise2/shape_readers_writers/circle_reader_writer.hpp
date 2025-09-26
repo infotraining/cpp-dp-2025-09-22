@@ -1,37 +1,18 @@
-#ifndef CIRCLEREADERWRITER_H
-#define CIRCLEREADERWRITER_H
+#ifndef CIRCLE_READER_WRITER_H
+#define CIRCLE_READER_WRITER_H
 
-#include "../circle.hpp"
 #include "shape_reader_writer.hpp"
 
 namespace Drawing
 {
     namespace IO
     {
+        // TODO - implement CircleReaderWriter class for Circle and register creator in SingletonShapeRWFactory
+
         class CircleReaderWriter : public ShapeReaderWriter
         {
-        public:
-            void read(Shape& shp, std::istream& in) override
-            {
-                Drawing::Circle& circle = static_cast<Drawing::Circle&>(shp);
-
-                Point pt;
-                int r;
-
-                in >> pt >> r;
-
-                circle.set_coord(pt);
-                circle.set_radius(r);
-            }
-
-            void write(const Shape& shp, std::ostream& out) override
-            {
-                const Circle& circle = static_cast<const Circle&>(shp);
-
-                out << Circle::id << " " << circle.coord() << " " << circle.radius() << std::endl;
-            }
         };
-    } // namespace IO
-} // namespace Drawing
+    }
+}
 
-#endif // CIRCLEREADERWRITER_H
+#endif // CIRCLE_READER_WRITER_H

@@ -78,7 +78,7 @@ public:
         : path_{std::move(path)}
         , bitmap_{nullptr}
     {
-        std::cout << "Proxy's creation for " << path_ << std::endl;
+        std::cout << "Proxy's creation" << std::endl;
     }
 
     void draw() override

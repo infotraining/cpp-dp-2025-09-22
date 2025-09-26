@@ -26,7 +26,7 @@ int main()
 
     std::cout << "\n\n---------------------\n\n";
 
-    root->remove(comp);
+    root->remove(leaf);
 
     root->display(1);
 }

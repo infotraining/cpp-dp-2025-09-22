@@ -1,17 +1,5 @@
 #include "rectangle_reader_writer.hpp"
 #include "../rectangle.hpp"
-#include "../shape_factories.hpp"
-
-namespace
-{
-    using namespace Drawing;
-    using namespace Drawing::IO;
-
-    bool is_registered = 
-        SingletonShapeRWFactory::instance() 
-            .register_creator(make_type_index<Rectangle>(), [] { return std::make_unique<RectangleReaderWriter>();});
-}
-
 
 void Drawing::IO::RectangleReaderWriter::read(Drawing::Shape& shp, std::istream& in)
 {

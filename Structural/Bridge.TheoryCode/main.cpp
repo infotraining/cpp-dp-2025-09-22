@@ -2,12 +2,10 @@
 
 using namespace std;
 
-#define API_3
+#define API_1
 
 #ifdef API_1
 auto drawing_api = make_shared<DrawingAPI1>();
-#elif defined(API_3)
-auto drawing_api = make_shared<DrawingAPI_PL>();
 #else   
 auto drawing_api = make_shared<DrawingAPI2>();
 #endif

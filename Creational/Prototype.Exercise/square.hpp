@@ -6,7 +6,7 @@
 namespace Drawing
 {
 
-    class Square : public CloneableShape<Square>
+    class Square : public Shape
     {
         Rectangle rect_;
 
@@ -25,7 +25,7 @@ namespace Drawing
 
         void draw() const override;
 
-        void move(int dx, int dy) override;        
+        void move(int dx, int dy) override;
     };
 }
 
